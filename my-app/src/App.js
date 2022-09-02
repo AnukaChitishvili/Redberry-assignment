@@ -1,9 +1,11 @@
+import EmployeeInfo from "./pages/employee-form/EmployeeFormPage";
 import Homepage from "./pages/homapage/Homepage";
 
 function App() {
   return (
     <div>
-      <Homepage />
+      {/* <Homepage /> */}
+      <EmployeeInfo />
     </div>
   );
 }
