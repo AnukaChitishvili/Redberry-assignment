@@ -8,7 +8,7 @@ import {
   SubTitle,
 } from "./popUp.style";
 import Button from "../button/Button";
-import PopUpImg from "../../assets/images/Pop-up-img.svg";
+import PopUpImg from "../../assets/imgs/Pop-up-img.svg";
 
 const PopUp = ({ closePopUp }) => {
   const navigate = useNavigate();
