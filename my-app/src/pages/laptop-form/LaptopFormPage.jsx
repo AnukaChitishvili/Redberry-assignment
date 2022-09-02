@@ -26,7 +26,7 @@ import FormTitle from "../../components/form-title/FormTitle";
 import Button from "../../components/button/Button";
 import Input from "../../components/input/Input";
 import SelectInput from "../../components/select-input/SelectInput";
-// import EclipseLogo from "../../components/eclipse-logo/EcliplseLogo";
+import EclipseLogo from "../../components/elcipse-logo/EclipseLogo";
 import PopUp from "../../components/pop-up/PopUp";
 import RadioInput from "../../components/radio-input/RadioInput";
 
@@ -252,7 +252,7 @@ const LaptopFormPage = () => {
         </ButtonContainer>
       </FormContainer>
       {openPopUp && <PopUp closePopUp={togglePopUp} />}
-      {/* <EclipseLogo /> */}
+      <EclipseLogo />
     </Container>
   );
 };

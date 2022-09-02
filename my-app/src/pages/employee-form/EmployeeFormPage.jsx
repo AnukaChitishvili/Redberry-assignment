@@ -18,7 +18,7 @@ import Input from "../../components/input/Input";
 import SelectInput from "../../components/select-input/SelectInput";
 import Button from "../../components/button/Button";
 import BackwardButton from "../../components/backward-button/BackwardButton";
-// import EclipseLogo from "../../components/eclipse-logo/EcliplseLogo";
+import EclipseLogo from "../../components/elcipse-logo/EclipseLogo";
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -158,7 +158,7 @@ const EmployeeInfo = () => {
           </ButtonWrapper>
         </FormWrapper>
       </FormContainer>
-      {/* <EclipseLogo onClick={navigateToHomepage} /> */}
+      <EclipseLogo onClick={navigateToHomepage} />
     </Container>
   );
 };
