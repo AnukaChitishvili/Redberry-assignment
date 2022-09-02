@@ -55,7 +55,7 @@ const validationSchema = Yup.object({
 
 const LaptopFormPage = () => {
   const [openPopUp, setOpenPopUp] = useState(false);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [brands, setBrands] = useState([]);
   const [cpu, setCpu] = useState([]);
 
@@ -86,26 +86,24 @@ const LaptopFormPage = () => {
       .then((res) => setCpu(res.data));
   }, []);
 
-  // const navigateToHomepage = () => {
-  //   navigate("/");
-  // };
+  const navigateToHomepage = () => {
+    navigate("/");
+  };
 
-  // const navigateToEmployeesPage = () => {
-  //   navigate("/employees");
-  // };
+  const navigateToEmployeesPage = () => {
+    navigate("/employees");
+  };
 
-  // const togglePopUp = () => {
-  //   setOpenPopUp((prevState) => !prevState);
-  //   navigate("/success");
-  // };
+  const togglePopUp = () => {
+    setOpenPopUp((prevState) => !prevState);
+    navigate("/success");
+  };
 
   const smth = "https://pcfy.redberryinternship.ge/api/laptop/create";
 
   return (
     <Container>
-      <BackwardButton
-      // onClick={navigateToHomepage}
-      />
+      <BackwardButton onClick={navigateToHomepage} />
       <FormTitle />
       <FormContainer>
         <UploadContainer>
@@ -246,22 +244,14 @@ const LaptopFormPage = () => {
         </InputContainer>
         <ButtonContainer>
           <ButtonWrapper>
-            <BackButton
-            // onClick={navigateToEmployeesPage}
-            >
-              უკან
-            </BackButton>
+            <BackButton onClick={navigateToEmployeesPage}>უკან</BackButton>
           </ButtonWrapper>
           <ButtonWrapper>
             <Button type="submit">დამახსვორება</Button>
           </ButtonWrapper>
         </ButtonContainer>
       </FormContainer>
-      {openPopUp && (
-        <PopUp
-        // closePopUp={togglePopUp}
-        />
-      )}
+      {openPopUp && <PopUp closePopUp={togglePopUp} />}
       {/* <EclipseLogo /> */}
     </Container>
   );

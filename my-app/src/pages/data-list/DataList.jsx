@@ -1,4 +1,4 @@
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import BackwardButton from "../../components/backward-button/BackwardButton";
 import Smth from "../../assets/imgs/Landing-img.svg";
@@ -16,17 +16,15 @@ import {
 } from "./dataList.style";
 
 const DataList = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  // const navigateToHomepage = () => {
-  //   navigate("/");
-  // };
+  const navigateToHomepage = () => {
+    navigate("/");
+  };
 
   return (
     <Container>
-      <BackwardButton
-      // onClick={navigateToHomepage}
-      />
+      <BackwardButton onClick={navigateToHomepage} />
       <ContentTitle>ჩანაწერების სია</ContentTitle>
       <ContentContainer>
         <div>
