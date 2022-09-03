@@ -6,6 +6,7 @@ import {
   LandingImageMobile,
   ButtonWrapper,
   LogoWrapper,
+  Select,
 } from "./homepage.style";
 import Button from "../../components/button/Button";
 import Logo from "../../assets/icons/Logo.svg";
@@ -25,7 +26,10 @@ const Homepage = () => {
 
   return (
     <Container>
-      <h1>
+      <Select type="select">
+        <option>anuka</option>
+      </Select>
+      {/* <h1>
         <LogoWrapper>
           <img src={Logo} alt="Logo" />
         </LogoWrapper>
@@ -37,7 +41,7 @@ const Homepage = () => {
       </ButtonWrapper>
       <ButtonWrapper>
         <Button onClick={navigateToDataListPage}>ჩანაწერების სია</Button>
-      </ButtonWrapper>
+      </ButtonWrapper> */}
     </Container>
   );
 };
