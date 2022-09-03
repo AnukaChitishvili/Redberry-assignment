@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/Redberry-assignment/static/css/main.e6c13ad2.css",
+    "main.js": "/Redberry-assignment/static/js/main.24e5da09.js",
+    "static/js/787.28cb0dcd.chunk.js": "/Redberry-assignment/static/js/787.28cb0dcd.chunk.js",
+    "static/media/Landing-img.svg": "/Redberry-assignment/static/media/Landing-img.cddad235c0b437a631e86124746aa5f2.svg",
+    "static/media/Eclipse-logo.svg": "/Redberry-assignment/static/media/Eclipse-logo.9647405b23e6c44f917efd350cd2a014.svg",
+    "static/media/Logo.svg": "/Redberry-assignment/static/media/Logo.8e17c58bd252eacf4a1335b873f341f6.svg",
+    "static/media/Mobile-landing-img.svg": "/Redberry-assignment/static/media/Mobile-landing-img.ea2adf982031d0d8ca5bb9a9d551adcc.svg",
+    "static/media/Helvetica Neue LT Pro 65 Medium.otf": "/Redberry-assignment/static/media/Helvetica Neue LT Pro 65 Medium.750a04f212242fdbb1e5.otf",
+    "static/media/HelveticaNeue Regular.ttf": "/Redberry-assignment/static/media/HelveticaNeue Regular.fe4c68c768ad00e80434.ttf",
+    "static/media/Helvetica Neue LT Pro 75 Bold.otf": "/Redberry-assignment/static/media/Helvetica Neue LT Pro 75 Bold.4291b351b26f2740898f.otf",
+    "static/media/Helvetica Neue Light.otf": "/Redberry-assignment/static/media/Helvetica Neue Light.7116c44b2cd47d488f85.otf",
+    "static/media/Pop-up-img.svg": "/Redberry-assignment/static/media/Pop-up-img.572a3ee7e04a651228638370aa29024f.svg",
+    "index.html": "/Redberry-assignment/index.html",
+    "static/media/Backward-arrow.svg": "/Redberry-assignment/static/media/Backward-arrow.df9614a2b1cd8cc6d47c9ff922b188b5.svg",
+    "main.e6c13ad2.css.map": "/Redberry-assignment/static/css/main.e6c13ad2.css.map",
+    "main.24e5da09.js.map": "/Redberry-assignment/static/js/main.24e5da09.js.map",
+    "787.28cb0dcd.chunk.js.map": "/Redberry-assignment/static/js/787.28cb0dcd.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.24e5da09.js"
+  ]
+}
