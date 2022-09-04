@@ -37,18 +37,22 @@ const validationSchema = Yup.object({
       "ლათინური ასოები, ციფრები, !@#$%^&*()_+= "
     )
     .required("ველის შევსება სავალდებულოა"),
-  // laptop_image:
-  CPU1: Yup.string()
+  // laptop_image: ,
+  // laptop_brand_id: ,
+  // laptop_cpu: ,
+  laptop_cpu_cores: Yup.string()
     .matches(/^[0-9]*$/, "მხოლოდ ციფრები")
     .required("ველის შევსება სავალდებულოა"),
-  CPU2: Yup.string()
-    .matches(/^[0-9]*$/, "მხოლოდ ციფრები")
-
-    .required("ველის შევსება სავალდებულოა"),
-  laptopRam: Yup.string()
+  laptop_cpu_threads: Yup.string()
     .matches(/^[0-9]*$/, "მხოლოდ ციფრები")
     .required("ველის შევსება სავალდებულოა"),
-  price: Yup.string()
+  laptop_ram: Yup.string()
+    .matches(/^[0-9]*$/, "მხოლოდ ციფრები")
+    .required("ველის შევსება სავალდებულოა"),
+  // laptop_hard_drive_type: "",
+  // laptop_state: "",
+  // laptop_purchase_date: "",
+  laptop_price: Yup.string()
     .matches(/^[0-9]*$/, "მხოლოდ ციფრები")
     .required("ველის შევსება სავალდებულოა"),
 });
@@ -59,21 +63,40 @@ const LaptopFormPage = () => {
   const [brands, setBrands] = useState([]);
   const [cpu, setCpu] = useState([]);
 
+  const address = "https://pcfy.redberryinternship.ge/api/laptop/create";
+
   const formik = useFormik({
     initialValues: {
-      laptopName: "",
-      CPU1: "",
-      CPU2: "",
-      laptopRam: "",
-      date: "",
-      price: "",
+      laptop_name: "",
+      laptop_image: "",
+      laptop_brand_id: "",
+      laptop_cpu: "",
+      laptop_cpu_cores: "",
+      laptop_cpu_threads: "",
+      laptop_ram: "",
+      laptop_hard_drive_type: "",
+      laptop_state: "",
+      laptop_purchase_date: "",
+      laptop_price: "",
     },
     validationSchema,
-    onSubmit: async (values) => {
-      await fetch(smth, {
-        method: "POST",
-        body: JSON.stringify(values),
+    onSubmit: async () => {
+      const values = localStorage.getItem("values");
+      const parsed = JSON.parse(values);
+
+      const body = JSON.stringify({
+        ...parsed,
+        laptop_state: "used",
+        laptop_hard_drive_type: "HDD",
+        token: "37a484885e326bfbc5e85e98dbe800fd",
       });
+
+      fetch(address, {
+        method: "POST",
+        body: body,
+      })
+        .then((res) => res.json())
+        .then((res) => console.log("res", res));
     },
   });
 
@@ -85,6 +108,28 @@ const LaptopFormPage = () => {
       .then((res) => res.json())
       .then((res) => setCpu(res.data));
   }, []);
+
+  useEffect(() => {
+    const values = localStorage.getItem("values");
+    if (values) {
+      const parsed = JSON.parse(values);
+      formik.setValues(parsed);
+    }
+  }, []);
+
+  const handleInputChange = async (e) => {
+    await formik.setFieldValue(e.target.name, e.target.value);
+    const previousValues = JSON.parse(localStorage.getItem("values"));
+
+    localStorage.setItem(
+      "values",
+      JSON.stringify({
+        ...previousValues,
+        ...formik.values,
+        [e.target.name]: e.target.value,
+      })
+    );
+  };
 
   const navigateToHomepage = () => {
     navigate("/");
@@ -99,13 +144,11 @@ const LaptopFormPage = () => {
     navigate("/success");
   };
 
-  const smth = "https://pcfy.redberryinternship.ge/api/laptop/create";
-
   return (
     <Container>
       <BackwardButton onClick={navigateToHomepage} />
       <FormTitle />
-      <FormContainer>
+      <FormContainer onSubmit={formik.handleSubmit}>
         <UploadContainer>
           <UploadText>ჩააგდე ან ატვირთე ლეპტოპის ფოტო</UploadText>
           <ButtonWrapper>
@@ -116,38 +159,51 @@ const LaptopFormPage = () => {
           <InputsWrapper>
             <Label>ლეპტოპის სახელი</Label>
             <Input
-              value={formik.values.laptopName}
-              onChange={formik.handleChange}
+              value={formik.values.laptop_name}
+              onChange={handleInputChange}
               onBlur={formik.handleBlur}
               placeholder="ლეპტოპის სახელი"
-              name="laptopName"
+              name="laptop_name"
               error={
-                formik.errors.laptopName && formik.touched.laptopName
-                  ? formik.errors.laptopName
+                formik.errors.laptop_name && formik.touched.laptop_name
+                  ? formik.errors.laptop_name
                   : null
               }
             />
           </InputsWrapper>
-          <SelectInputWrapper>
-            <SelectInput title="ლეპტოპის ბრენდი" options={brands} />
+          <SelectInputWrapper isFirst>
+            <SelectInput
+              value={formik.values.laptop_brand_id}
+              name="laptop_brand_id"
+              title="ლეპტოპის ბრენდი"
+              options={brands}
+              setFieldValue={handleInputChange}
+            />
           </SelectInputWrapper>
         </InputContainer>
         <Border />
         <InputContainer>
           <SelectInputWrapper isSecond>
-            <SelectInput title="CPU" options={cpu} />
+            <SelectInput
+              title="CPU"
+              options={cpu}
+              value={formik.values.laptop_cpu}
+              name="laptop_cpu"
+              setFieldValue={handleInputChange}
+            />
           </SelectInputWrapper>
           <InputsWrapper hasMargin>
             <Label>CPU-ს ბირთვი</Label>
             <Input
-              value={formik.values.CPU1}
-              onChange={formik.handleChange}
+              value={formik.values.laptop_cpu_cores}
+              onChange={handleInputChange}
               onBlur={formik.handleBlur}
               placeholder="14"
-              name="CPU1"
+              name="laptop_cpu_cores"
               error={
-                formik.errors.CPU1 && formik.touched.CPU1
-                  ? formik.errors.CPU1
+                formik.errors.laptop_cpu_cores &&
+                formik.touched.laptop_cpu_cores
+                  ? formik.errors.laptop_cpu_cores
                   : null
               }
             />
@@ -155,14 +211,15 @@ const LaptopFormPage = () => {
           <InputsWrapper hasMargin>
             <Label>CPU-ს ნაკადი</Label>
             <Input
-              value={formik.values.CPU2}
-              onChange={formik.handleChange}
+              value={formik.values.laptop_cpu_threads}
+              onChange={handleInputChange}
               onBlur={formik.handleBlur}
               placeholder="350"
-              name="CPU2"
+              name="laptop_cpu_threads"
               error={
-                formik.errors.CPU2 && formik.touched.CPU2
-                  ? formik.errors.CPU2
+                formik.errors.laptop_cpu_threads &&
+                formik.touched.laptop_cpu_threads
+                  ? formik.errors.laptop_cpu_threads
                   : null
               }
             />
@@ -172,14 +229,14 @@ const LaptopFormPage = () => {
           <InputsWrapper hasFixedWidth>
             <Label>ლეპტოპის RAM (GB)</Label>
             <Input
-              value={formik.values.laptopRam}
-              onChange={formik.handleChange}
+              value={formik.values.laptop_ram}
+              onChange={handleInputChange}
               onBlur={formik.handleBlur}
               placeholder="16"
-              name="laptopRam"
+              name="laptop_ram"
               error={
-                formik.errors.laptopRam && formik.touched.laptopRam
-                  ? formik.errors.laptopRam
+                formik.errors.laptop_ram && formik.touched.laptop_ram
+                  ? formik.errors.laptop_ram
                   : null
               }
             />
@@ -203,10 +260,10 @@ const LaptopFormPage = () => {
           <InputsWrapper>
             <Label>შეძენის რიცხვი</Label>
             <Input
-              value={formik.values.date}
-              onChange={formik.handleChange}
+              value={formik.values.laptop_purchase_date}
+              onChange={handleInputChange}
               // placeholder="date"
-              name="date"
+              name="laptop_purchase_date"
               onBlur={formik.onBlur}
               type="date"
             />
@@ -214,14 +271,14 @@ const LaptopFormPage = () => {
           <InputsWrapper hasMargin>
             <Label>ლეპტოპის ფასი</Label>
             <Input
-              value={formik.values.price}
-              onChange={formik.handleChange}
+              value={formik.values.laptop_price}
+              onChange={handleInputChange}
               onBlur={formik.handleBlur}
               placeholder="0000"
-              name="price"
+              name="laptop_price"
               error={
-                formik.errors.price && formik.touched.price
-                  ? formik.errors.price
+                formik.errors.laptop_price && formik.touched.laptop_price
+                  ? formik.errors.laptop_price
                   : null
               }
             />
@@ -247,7 +304,7 @@ const LaptopFormPage = () => {
             <BackButton onClick={navigateToEmployeesPage}>უკან</BackButton>
           </ButtonWrapper>
           <ButtonWrapper>
-            <Button type="submit">დამახსვორება</Button>
+            <Button type="submit">დამახსოვრება</Button>
           </ButtonWrapper>
         </ButtonContainer>
       </FormContainer>

@@ -20,8 +20,9 @@ const Input = ({
         name={name}
         onBlur={onBlur}
         type={type}
+        error={error}
       />
-      <ErrorMessage>{error}</ErrorMessage>
+      <ErrorMessage error={error}>{error}</ErrorMessage>
     </>
   );
 };

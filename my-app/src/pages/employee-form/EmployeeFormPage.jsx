@@ -44,29 +44,9 @@ const EmployeeInfo = () => {
   const navigate = useNavigate();
   const [teams, setTeams] = useState([]);
   const [positions, setPositions] = useState([]);
-  const formik = useFormik({
-    initialValues: {
-      name: "",
-      surname: "",
-      email: "",
-      phonenumber: "",
-    },
-    validationSchema,
-    // onSubmit: async (values) => {
-    //   await fetch(smth, {
-    //     method: "POST",
-    //     body: JSON.stringify(values),
-    //   });
-    //   navigateToLaptopsPage();
-    // },
-  });
 
   const navigateToHomepage = () => {
     navigate("/");
-  };
-
-  const navigateToLaptopsPage = () => {
-    navigate("/laptops");
   };
 
   useEffect(() => {
@@ -77,6 +57,37 @@ const EmployeeInfo = () => {
       .then((res) => res.json())
       .then((res) => setPositions(res.data));
   }, []);
+
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      surname: "",
+      email: "",
+      phonenumber: "",
+      position_id: "",
+      team_id: "",
+    },
+    validationSchema,
+    onSubmit: () => {
+      navigate("/laptops");
+    },
+  });
+
+  useEffect(() => {
+    const values = localStorage.getItem("values");
+    if (values) {
+      const parsed = JSON.parse(values);
+      formik.setValues(parsed);
+    }
+  }, []);
+
+  const handleInputChange = async (e) => {
+    await formik.setFieldValue(e.target.name, e.target.value);
+    localStorage.setItem(
+      "values",
+      JSON.stringify({ ...formik.values, [e.target.name]: e.target.value })
+    );
+  };
 
   return (
     <Container>
@@ -89,7 +100,7 @@ const EmployeeInfo = () => {
               <Label>სახელი</Label>
               <Input
                 value={formik.values.name}
-                onChange={formik.handleChange}
+                onChange={handleInputChange}
                 name="name"
                 onBlur={formik.onBlur}
                 placeholder="სახელი"
@@ -104,7 +115,7 @@ const EmployeeInfo = () => {
               <Label>გვარი</Label>
               <Input
                 value={formik.values.surname}
-                onChange={formik.handleChange}
+                onChange={handleInputChange}
                 name="surname"
                 onBlur={formik.onBlur}
                 placeholder="გვარი"
@@ -117,16 +128,28 @@ const EmployeeInfo = () => {
             </InputWrapper>
           </InputContainer>
           <SelectInputWrapper>
-            <SelectInput options={teams} title="თიმი" />
+            <SelectInput
+              value={formik.values.team_id}
+              options={teams}
+              title="თიმი"
+              setFieldValue={handleInputChange}
+              name="team_id"
+            />
           </SelectInputWrapper>
           <SelectInputWrapper>
-            <SelectInput options={positions} title="პოზიცია" />
+            <SelectInput
+              value={formik.values.position_id}
+              options={positions}
+              title="პოზიცია"
+              setFieldValue={handleInputChange}
+              name="position_id"
+            />
           </SelectInputWrapper>
           <InputWrapper>
             <Label>მეილი</Label>
             <Input
               value={formik.values.email}
-              onChange={formik.handleChange}
+              onChange={handleInputChange}
               name="email"
               onBlur={formik.onBlur}
               type="email"
@@ -142,7 +165,7 @@ const EmployeeInfo = () => {
             <Label>ტელეფონის ნომერი</Label>
             <Input
               value={formik.values.phonenumber}
-              onChange={formik.handleChange}
+              onChange={handleInputChange}
               name="phonenumber"
               onBlur={formik.onBlur}
               placeholder="ტელეფონის ნომერი"

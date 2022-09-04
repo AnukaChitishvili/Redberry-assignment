@@ -2,12 +2,6 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: red;
-  width: 100%;
-  /* display: flex;
   width: 100%;
   height: 100%;
   flex-direction: column;
@@ -15,7 +9,7 @@ export const Container = styled.div`
   justify-content: center;
   @media (max-width: 390px) {
     padding: 0 16px 35px;
-  } */
+  }
 `;
 
 export const LandingImage = styled.img`
@@ -50,4 +44,10 @@ export const LogoWrapper = styled.a`
   cursor: pointer;
 `;
 
-export const Select = styled.select``;
+//
+
+export const Jandaba = styled.div`
+  display: flex;
+  justify-content: center;
+  space-between: center;
+`;

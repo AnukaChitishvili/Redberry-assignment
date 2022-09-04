@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
 
+import useOutsideClickDetector from "../../helpers/useOutsideClickDetector";
 import {
   Layer,
   PopUpContainer,
@@ -10,7 +12,9 @@ import {
 import Button from "../button/Button";
 import PopUpImg from "../../assets/imgs/Pop-up-img.svg";
 
-const PopUp = ({ closePopUp }) => {
+const PopUp = ({ closePopUp = () => {} }) => {
+  const popUpRef = useRef(null);
+  useOutsideClickDetector(popUpRef, closePopUp);
   const navigate = useNavigate();
 
   const goToHomepage = () => {
@@ -22,8 +26,8 @@ const PopUp = ({ closePopUp }) => {
   };
 
   return (
-    <Layer onClick={closePopUp}>
-      <PopUpContainer>
+    <Layer>
+      <PopUpContainer ref={popUpRef}>
         <img src={PopUpImg} alt="pop up" />
         <Title>ჩანაწერი დამატებულია!</Title>
         <ButtonWrapper>

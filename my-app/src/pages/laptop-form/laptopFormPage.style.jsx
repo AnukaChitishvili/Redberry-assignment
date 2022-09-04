@@ -7,7 +7,7 @@ export const Container = styled.div`
   background-color: #f6f6f6;
   width: 100%;
   height: 100%;
-  padding: 96px 16px;
+  padding: 96px 16px 200px;
   position: relative;
   @media (max-width: 390px) {
     padding-bottom: 0;
@@ -115,10 +115,12 @@ export const BackButton = styled.button`
 export const SelectInputWrapper = styled.div`
   margin-left: ${({ isSecond }) => (isSecond ? "0" : "63px")};
   width: 100%;
-  margin-bottom: ${({ isSecond }) => (isSecond ? "-11px" : "0")};
+  margin-bottom: ${({ isFirst }) => (isFirst ? "-24px" : "-28px")};
+  margin-bottom: -24px;
   @media (max-width: 390px) {
     margin-left: 0;
     margin-top: 10px;
+    margin-bottom: ${({ isSecond }) => (isSecond ? "-11px" : "0")};
   }
 `;
 

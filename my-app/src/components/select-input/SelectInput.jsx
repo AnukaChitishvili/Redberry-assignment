@@ -1,10 +1,20 @@
 import { SelectInputContainer } from "./selectInput.style";
 
-const SelectInput = ({ options, title }) => {
+const SelectInput = ({ name, options, title, setFieldValue, value }) => {
   return (
-    <SelectInputContainer name="positions">
+    <SelectInputContainer
+      name={name}
+      defaultValue=""
+      onChange={setFieldValue}
+      value={value}
+    >
+      <option value="" disabled hidden>
+        {title}
+      </option>
       {options.map((option) => (
-        <option key={option.id}>{title}</option>
+        <option key={option.id} value={option.id}>
+          {option.name}
+        </option>
       ))}
     </SelectInputContainer>
   );

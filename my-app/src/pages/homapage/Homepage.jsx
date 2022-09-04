@@ -1,4 +1,6 @@
 import { useNavigate } from "react-router-dom";
+// import { useDropzone } from "react-dropzone";
+// import { useCallback } from "react";
 
 import {
   Container,
@@ -6,7 +8,8 @@ import {
   LandingImageMobile,
   ButtonWrapper,
   LogoWrapper,
-  Select,
+  // Select,
+  // Jandaba,
 } from "./homepage.style";
 import Button from "../../components/button/Button";
 import Logo from "../../assets/icons/Logo.svg";
@@ -26,10 +29,7 @@ const Homepage = () => {
 
   return (
     <Container>
-      <Select type="select">
-        <option>anuka</option>
-      </Select>
-      {/* <h1>
+      <h1>
         <LogoWrapper>
           <img src={Logo} alt="Logo" />
         </LogoWrapper>
@@ -41,9 +41,46 @@ const Homepage = () => {
       </ButtonWrapper>
       <ButtonWrapper>
         <Button onClick={navigateToDataListPage}>ჩანაწერების სია</Button>
-      </ButtonWrapper> */}
+      </ButtonWrapper>
     </Container>
   );
 };
 
 export default Homepage;
+
+// {
+//  <Container>
+//      <h1>
+//       <LogoWrapper>
+//        <img src={Logo} alt="Logo" />
+//       </LogoWrapper>
+//     </h1>
+//      <LandingImage src={LandingImg} alt="landing" />
+//       <LandingImageMobile src={LandingImgMobile} alt="landing mobile" />
+//        <ButtonWrapper isFirst>
+//       <Button onClick={navigateToEmployeesPage}>ჩანაწერის დამატება</Button>
+//     </ButtonWrapper>
+//     <ButtonWrapper>
+//      <Button onClick={navigateToDataListPage}>ჩანაწერების სია</Button>
+//     </ButtonWrapper>
+//      </Container>
+// }
+
+{
+  /* <Jandaba>
+<div {...getRootProps()}>
+  <input {...getInputProps()} />
+  {isDragActive ? (
+    <p>Drop the files here ...</p>
+  ) : (
+    <p>Drag 'n' drop some files here, or click to select files</p>
+  )}
+</div>
+</Jandaba> */
+}
+
+// const onDrop = useCallback((acceptedFiles) => {
+//   // Do something with the files
+// }, []);
+
+// const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });

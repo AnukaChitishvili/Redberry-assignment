@@ -42,7 +42,7 @@ export const TitleStepWrapperMobile = styled.div`
   flex-direction: column;
   align-items: center;
   position: absolute;
-  top: 28px;
+  top: 17px;
   @media (min-width: 1920px) {
     display: none;
   }
@@ -51,7 +51,7 @@ export const TitleStepWrapperMobile = styled.div`
 export const StepMobile = styled.div`
   color: #898989;
   font-size: 14px;
-  margin: 5px 0 11px;
+  margin: 5px 0 20px;
   @media (min-width: 1920px) {
     display: none;
   }

@@ -7,16 +7,17 @@ import {
   StepMobile,
 } from "./formTitle.style";
 
-const FormTitle = () => {
+const FormTitle = ({ bla }) => {
   return (
     <>
       <FormTitleContainer>
         <TitleStepWrapper>
           <Title>თანამშრომლის ინფო</Title>
-          <Step />
+          {true && <Step />}
           <StepMobile>1/2</StepMobile>
         </TitleStepWrapper>
         <Title isSecond>ლეპტოპის მახასიათებლები</Title>
+        {false && <Step />}
       </FormTitleContainer>
       <TitleStepWrapperMobile>
         <Title>თანამშრომლის ინფო</Title>

@@ -23,6 +23,7 @@ export const FormContainer = styled.form`
   @media (max-width: 390px) {
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
+    margin-top: 20px;
   }
 `;
 
@@ -70,7 +71,7 @@ export const InputWrapper = styled.div`
 export const Label = styled.label`
   font-size: 18px;
   font-family: "helvetica medium";
-  color: #000000;
+  color: ${({ hasError }) => (hasError ? "#E52F2F" : "#000000")};
   margin-bottom: 20px;
   @media (max-width: 390px) {
     margin-bottom: 10px;
