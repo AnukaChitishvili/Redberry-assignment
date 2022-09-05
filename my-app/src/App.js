@@ -13,7 +13,7 @@ const App = () => {
       <Route path="/laptops" element={<LaptopFormPage />} />
       <Route path="/success" element={<LaptopFormPage />} />
       <Route path="/data-list" element={<DataList />} />
-      <Route path="/laptop-info" element={<LaptopInfo />} />
+      <Route path="/laptop-info/:id" element={<LaptopInfo />} />
     </Routes>
   );
 };

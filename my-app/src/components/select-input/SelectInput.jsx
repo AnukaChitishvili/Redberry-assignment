@@ -15,6 +15,7 @@ const SelectInput = ({
       defaultValue=""
       onChange={setFieldValue}
       value={value}
+      error={error}
     >
       <option value="" disabled hidden>
         {title}

@@ -21,7 +21,6 @@ import {
   RadioInputContainer,
   Wrapper,
   RadioLabel,
-  RadioInput,
 } from "./laptopFormPage.style";
 import BackwardButton from "../../components/backward-button/BackwardButton";
 import FormTitle from "../../components/form-title/FormTitle";
@@ -31,32 +30,27 @@ import SelectInput from "../../components/select-input/SelectInput";
 import EclipseLogo from "../../components/elcipse-logo/EclipseLogo";
 import PopUp from "../../components/pop-up/PopUp";
 
-// const validationSchema = Yup.object({
-//   laptop_name: Yup.string()
-//     .matches(
-//       /^[a-zA-Z0-9!@#$%^&*()_+=]*$/,
-//       "ლათინური ასოები, ციფრები, !@#$%^&*()_+= "
-//     )
-//     .required("ველის შევსება სავალდებულოა"),
-//   // laptop_image: ,
-//   // laptop_brand_id: ,
-//   // laptop_cpu: ,
-//   laptop_cpu_cores: Yup.string()
-//     .matches(/^[0-9]*$/, "მხოლოდ ციფრები")
-//     .required("ველის შევსება სავალდებულოა"),
-//   laptop_cpu_threads: Yup.string()
-//     .matches(/^[0-9]*$/, "მხოლოდ ციფრები")
-//     .required("ველის შევსება სავალდებულოა"),
-//   laptop_ram: Yup.string()
-//     .matches(/^[0-9]*$/, "მხოლოდ ციფრები")
-//     .required("ველის შევსება სავალდებულოა"),
-//   // laptop_hard_drive_type: "",
-//   // laptop_state: "",
-//   // laptop_purchase_date: "",
-//   laptop_price: Yup.string()
-//     .matches(/^[0-9]*$/, "მხოლოდ ციფრები")
-//     .required("ველის შევსება სავალდებულოა"),
-// });
+const validationSchema = Yup.object({
+  laptop_name: Yup.string()
+    .matches(
+      /^[a-zA-Z0-9!@#$%^&*()_+=]*$/,
+      "ლათინური ასოები, ციფრები, !@#$%^&*()_+= "
+    )
+    .required("ველის შევსება სავალდებულოა"),
+  laptop_cpu_cores: Yup.string()
+    .matches(/^[0-9]*$/, "მხოლოდ ციფრები")
+    .required("ველის შევსება სავალდებულოა"),
+  laptop_cpu_threads: Yup.string()
+    .matches(/^[0-9]*$/, "მხოლოდ ციფრები")
+    .required("ველის შევსება სავალდებულოა"),
+  laptop_ram: Yup.string()
+    .matches(/^[0-9]*$/, "მხოლოდ ციფრები")
+    .required("ველის შევსება სავალდებულოა"),
+
+  laptop_price: Yup.string()
+    .matches(/^[0-9]*$/, "მხოლოდ ციფრები")
+    .required("ველის შევსება სავალდებულოა"),
+});
 
 const LaptopFormPage = () => {
   const location = useLocation();
@@ -80,21 +74,14 @@ const LaptopFormPage = () => {
       laptop_purchase_date: "",
       laptop_price: "",
     },
-    // validationSchema,
+    validationSchema,
     onSubmit: async (values) => {
       const storedData = localStorage.getItem("values");
       const parsedStoredData = JSON.parse(storedData);
-      const tempValues = {
-        ...parsedStoredData,
-        laptop_state: "used",
-        laptop_hard_drive_type: "HDD",
-      };
-
-      console.log(parsedStoredData);
 
       const formData = new FormData();
 
-      Object.entries(tempValues).map(([key, value]) => {
+      Object.entries(parsedStoredData).map(([key, value]) => {
         if (key === "position_id") {
           formData.append(key, +value);
         } else {
@@ -102,7 +89,7 @@ const LaptopFormPage = () => {
         }
       });
 
-      formData.append("token", "37a484885e326bfbc5e85e98dbe800fd");
+      formData.append("token", "1c6395235ac08f3fa0fa672dbb38c029");
       formData.append("laptop_image", values.laptop_image);
 
       fetch(address, {
@@ -111,8 +98,10 @@ const LaptopFormPage = () => {
       })
         .then((res) => res.json())
         .then((res) => {
-          localStorage.removeItem("values");
-          navigate("/success");
+          if (!res.errors) {
+            localStorage.removeItem("values");
+            navigate("/success");
+          }
         })
         .catch((err) => console.log("err", err.message));
     },
@@ -129,6 +118,7 @@ const LaptopFormPage = () => {
 
   useEffect(() => {
     const values = localStorage.getItem("values");
+
     if (values) {
       const parsed = JSON.parse(values);
       formik.setValues(parsed);
@@ -147,19 +137,6 @@ const LaptopFormPage = () => {
       })
     );
   };
-
-  // const handleRadioInputChange = async (e) => {
-  //   await formik.handleChange(e.target.name,);
-  //   const previousValues = JSON.parse(localStorage.getItem("values"));
-  //   localStorage.setItem(
-  //     "values",
-  //     JSON.stringify({
-  //       ...previousValues,
-  //       ...formik.values,
-  //       [e.target.name]: e.target.value,
-  //     })
-  //   );
-  // };
 
   const navigateToHomepage = () => {
     navigate("/");
@@ -195,7 +172,7 @@ const LaptopFormPage = () => {
             <p>Drop the files here ...</p>
           ) : (
             <ButtonWrapper>
-              <Button>ატვირთე</Button>
+              <Button type="button">ატვირთე</Button>
             </ButtonWrapper>
           )}
         </UploadContainer>
@@ -292,18 +269,20 @@ const LaptopFormPage = () => {
               <Wrapper>
                 <input
                   type="radio"
-                  value={formik.values.laptop_hard_drive_type}
+                  value="SSD"
                   name="laptop_hard_drive_type"
-                  onChange={formik.handleChange}
+                  onChange={handleInputChange}
+                  checked={formik.values.laptop_hard_drive_type === "SSD"}
                 />
                 <RadioLabel>SSD</RadioLabel>
               </Wrapper>
               <Wrapper hasMargin>
                 <input
                   type="radio"
-                  value={formik.values.laptop_hard_drive_type}
+                  value="HDD"
+                  onChange={handleInputChange}
                   name="laptop_hard_drive_type"
-                  onChange={formik.handleChange}
+                  checked={formik.values.laptop_hard_drive_type === "HDD"}
                 />
                 <RadioLabel>HDD</RadioLabel>
               </Wrapper>
@@ -346,18 +325,20 @@ const LaptopFormPage = () => {
               <Wrapper>
                 <input
                   type="radio"
-                  value={formik.values.laptop_state}
+                  value="new"
                   name="laptop_state"
-                  onChange={formik.handleChange}
+                  onChange={handleInputChange}
+                  checked={formik.values.laptop_state === "new"}
                 />
                 <RadioLabel>ახალი</RadioLabel>
               </Wrapper>
               <Wrapper hasMargin>
                 <input
                   type="radio"
-                  value={formik.values.laptop_state}
+                  value="used"
                   name="laptop_state"
-                  onChange={formik.handleChange}
+                  onChange={handleInputChange}
+                  checked={formik.values.laptop_state === "used"}
                 />
                 <RadioLabel>ძველი</RadioLabel>
               </Wrapper>

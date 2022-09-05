@@ -12,6 +12,7 @@ import {
   Title,
   Paragraph,
   Wrapper,
+  LinkWrapper,
 } from "./dataList.style";
 
 const DataList = () => {
@@ -24,7 +25,7 @@ const DataList = () => {
 
   useEffect(() => {
     fetch(
-      "https://pcfy.redberryinternship.ge/api/laptops?token=37a484885e326bfbc5e85e98dbe800fd"
+      "https://pcfy.redberryinternship.ge/api/laptops?1c6395235ac08f3fa0fa672dbb38c029"
     )
       .then((res) => res.json())
       .then((res) => setCards(res.data));
@@ -37,7 +38,6 @@ const DataList = () => {
         <ContentTitle>ჩანაწერების სია</ContentTitle>
         <Wrapper>
           {cards.map((card) => (
-            // key
             <ContentContainer>
               <ContentWrapper>
                 <Img
@@ -49,7 +49,11 @@ const DataList = () => {
                     {card.user.name} {card.user.surname}
                   </Title>
                   <Paragraph>{card.laptop.name} </Paragraph>
-                  <Link to="/laptop-info">მეტის ნახვა</Link>
+                  <LinkWrapper>
+                    <Link to={`/laptop-info/${card.laptop.id}`}>
+                      მეტის ნახვა
+                    </Link>
+                  </LinkWrapper>
                 </InfoWrapper>
               </ContentWrapper>
             </ContentContainer>

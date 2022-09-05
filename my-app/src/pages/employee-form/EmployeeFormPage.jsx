@@ -29,8 +29,8 @@ const validationSchema = Yup.object({
     .min(3, "მინიმუმ ორი სიმბოლო, ქართული ასოები")
     .matches(/^[ა-ჰ]*$/, "მინიმუმ ორი სიმბოლო, ქართული ასოები")
     .required("ველის შევსება სავალდებულოა"),
-  // position_id:
-  // team_id: Yup.string().required("anuka"),
+  position_id: Yup.string().required(""),
+  team_id: Yup.string().required(""),
   email: Yup.string()
     .matches(/[a-z0-9]+@redberry.ge/, "უნდა მთავრდებოდეს @redberry.ge-თი")
     .required("ველის შევსება სავალდებულოა"),

@@ -57,6 +57,7 @@ export const ContentWrapper = styled.div`
 export const Img = styled.img`
   width: 266px;
   height: 178px;
+  border-radius: 6px;
   @media (max-width: 390px) {
     width: 164px;
     height: 109px;
@@ -94,4 +95,8 @@ export const Paragraph = styled.p`
   color: #2e2e2e;
   font-size: 18px;
   font-family: "helvetica regular";
+`;
+
+export const LinkWrapper = styled.div`
+  margin-top: 10px;
 `;
