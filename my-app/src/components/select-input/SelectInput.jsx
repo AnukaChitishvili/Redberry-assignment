@@ -1,6 +1,6 @@
 import { SelectInputContainer } from "./selectInput.style";
 
-const SelectInput = ({ name, options, title, setFieldValue, value }) => {
+const SelectInput = ({ name, options, title, setFieldValue, value, error }) => {
   return (
     <SelectInputContainer
       name={name}

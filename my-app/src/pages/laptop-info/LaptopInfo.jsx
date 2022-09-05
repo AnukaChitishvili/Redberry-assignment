@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 
 import BackwardButton from "../../components/backward-button/BackwardButton";
 import {
@@ -23,17 +22,10 @@ import Comp from "../../assets/imgs/comp.svg";
 
 const LaptopInfo = () => {
   const navigate = useNavigate();
-  const [laptopInfo, setLaptopInfo] = useState([]);
 
   const navigateToSuccess = () => {
     navigate("/success");
   };
-
-  useEffect(() => {
-    fetch("")
-      .then((res) => res.json())
-      .then((res) => setLaptopInfo(res.data));
-  }, []);
 
   return (
     <Container>

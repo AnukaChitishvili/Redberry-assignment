@@ -7,21 +7,25 @@ import {
   StepMobile,
 } from "./formTitle.style";
 
-const FormTitle = ({ bla }) => {
+const FormTitle = ({ pathName }) => {
   return (
     <>
       <FormTitleContainer>
         <TitleStepWrapper>
           <Title>თანამშრომლის ინფო</Title>
-          {true && <Step />}
+          {pathName === "/employees" && <Step />}
           <StepMobile>1/2</StepMobile>
         </TitleStepWrapper>
-        <Title isSecond>ლეპტოპის მახასიათებლები</Title>
-        {false && <Step />}
+        <TitleStepWrapper>
+          <Title isSecond>ლეპტოპის მახასიათებლები</Title>
+          {pathName === "/laptops" && <Step />}
+        </TitleStepWrapper>
       </FormTitleContainer>
       <TitleStepWrapperMobile>
-        <Title>თანამშრომლის ინფო</Title>
-        <StepMobile>1/2</StepMobile>
+        {pathName === "/employees" && <Title>თანამშრომლის ინფო</Title>}
+        {pathName === "/employees" && <StepMobile>1/2</StepMobile>}
+        {pathName === "/laptops" && <Title>ლეპტოპის მახასიათებლები</Title>}
+        {pathName === "/laptops" && <StepMobile>2/2</StepMobile>}
       </TitleStepWrapperMobile>
     </>
   );

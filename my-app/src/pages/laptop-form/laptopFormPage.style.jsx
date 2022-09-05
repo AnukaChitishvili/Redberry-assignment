@@ -14,7 +14,7 @@ export const Container = styled.div`
   }
 `;
 
-export const FormContainer = styled.div`
+export const FormContainer = styled.form`
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
@@ -135,11 +135,12 @@ export const RadioInputContainer = styled.div`
 export const Wrapper = styled.div`
   display: flex;
   align-items: center;
+  margin-left: ${({ hasMargin }) => (hasMargin ? "62px" : "0")};
 `;
 
 export const RadioLabel = styled.label`
   font-size: 18px;
   font-family: "helvetica medium";
   color: #000000;
-  margin-left: 8px;
+  margin-left: 18px;
 `;

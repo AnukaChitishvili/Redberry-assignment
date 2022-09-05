@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useCallback } from "react";
+import { useDropzone } from "react-dropzone";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
@@ -20,6 +21,7 @@ import {
   RadioInputContainer,
   Wrapper,
   RadioLabel,
+  RadioInput,
 } from "./laptopFormPage.style";
 import BackwardButton from "../../components/backward-button/BackwardButton";
 import FormTitle from "../../components/form-title/FormTitle";
@@ -28,37 +30,42 @@ import Input from "../../components/input/Input";
 import SelectInput from "../../components/select-input/SelectInput";
 import EclipseLogo from "../../components/elcipse-logo/EclipseLogo";
 import PopUp from "../../components/pop-up/PopUp";
-import RadioInput from "../../components/radio-input/RadioInput";
 
-const validationSchema = Yup.object({
-  laptop_name: Yup.string()
-    .matches(
-      /^[a-zA-Z0-9!@#$%^&*()_+=]*$/,
-      "ლათინური ასოები, ციფრები, !@#$%^&*()_+= "
-    )
-    .required("ველის შევსება სავალდებულოა"),
-  // laptop_image: ,
-  // laptop_brand_id: ,
-  // laptop_cpu: ,
-  laptop_cpu_cores: Yup.string()
-    .matches(/^[0-9]*$/, "მხოლოდ ციფრები")
-    .required("ველის შევსება სავალდებულოა"),
-  laptop_cpu_threads: Yup.string()
-    .matches(/^[0-9]*$/, "მხოლოდ ციფრები")
-    .required("ველის შევსება სავალდებულოა"),
-  laptop_ram: Yup.string()
-    .matches(/^[0-9]*$/, "მხოლოდ ციფრები")
-    .required("ველის შევსება სავალდებულოა"),
-  // laptop_hard_drive_type: "",
-  // laptop_state: "",
-  // laptop_purchase_date: "",
-  laptop_price: Yup.string()
-    .matches(/^[0-9]*$/, "მხოლოდ ციფრები")
-    .required("ველის შევსება სავალდებულოა"),
-});
+// const validationSchema = Yup.object({
+//   laptop_name: Yup.string()
+//     .matches(
+//       /^[a-zA-Z0-9!@#$%^&*()_+=]*$/,
+//       "ლათინური ასოები, ციფრები, !@#$%^&*()_+= "
+//     )
+//     .required("ველის შევსება სავალდებულოა"),
+//   // laptop_image: ,
+//   // laptop_brand_id: ,
+//   // laptop_cpu: ,
+//   laptop_cpu_cores: Yup.string()
+//     .matches(/^[0-9]*$/, "მხოლოდ ციფრები")
+//     .required("ველის შევსება სავალდებულოა"),
+//   laptop_cpu_threads: Yup.string()
+//     .matches(/^[0-9]*$/, "მხოლოდ ციფრები")
+//     .required("ველის შევსება სავალდებულოა"),
+//   laptop_ram: Yup.string()
+//     .matches(/^[0-9]*$/, "მხოლოდ ციფრები")
+//     .required("ველის შევსება სავალდებულოა"),
+//   // laptop_hard_drive_type: "",
+//   // laptop_state: "",
+//   // laptop_purchase_date: "",
+//   laptop_price: Yup.string()
+//     .matches(/^[0-9]*$/, "მხოლოდ ციფრები")
+//     .required("ველის შევსება სავალდებულოა"),
+// });
 
 const LaptopFormPage = () => {
-  const [openPopUp, setOpenPopUp] = useState(false);
+  const onDrop = useCallback((acceptedFiles) => {
+    console.log(acceptedFiles);
+  }, []);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
+  const location = useLocation();
   const navigate = useNavigate();
   const [brands, setBrands] = useState([]);
   const [cpu, setCpu] = useState([]);
@@ -79,24 +86,25 @@ const LaptopFormPage = () => {
       laptop_purchase_date: "",
       laptop_price: "",
     },
-    validationSchema,
+    // validationSchema,
     onSubmit: async () => {
-      const values = localStorage.getItem("values");
-      const parsed = JSON.parse(values);
+      navigate("/success");
+      // const values = localStorage.getItem("values");
+      // const parsed = JSON.parse(values);
 
-      const body = JSON.stringify({
-        ...parsed,
-        laptop_state: "used",
-        laptop_hard_drive_type: "HDD",
-        token: "37a484885e326bfbc5e85e98dbe800fd",
-      });
+      // const body = JSON.stringify({
+      //   ...parsed,
+      //   laptop_state: "used",
+      //   laptop_hard_drive_type: "HDD",
+      //   token: "37a484885e326bfbc5e85e98dbe800fd",
+      // });
 
-      fetch(address, {
-        method: "POST",
-        body: body,
-      })
-        .then((res) => res.json())
-        .then((res) => console.log("res", res));
+      // fetch(address, {
+      //   method: "POST",
+      //   body: body,
+      // })
+      //   .then((res) => res.json())
+      //   .then((res) => console.log("res", res));
     },
   });
 
@@ -140,21 +148,24 @@ const LaptopFormPage = () => {
   };
 
   const togglePopUp = () => {
-    setOpenPopUp((prevState) => !prevState);
-    navigate("/success");
+    navigate("/laptops");
   };
 
   return (
     <Container>
       <BackwardButton onClick={navigateToHomepage} />
-      <FormTitle />
+      <FormTitle pathName={location.pathname} />
       <FormContainer onSubmit={formik.handleSubmit}>
-        <UploadContainer>
+        <div {...getRootProps()}>
+          <input {...getInputProps()} value={formik.values.laptop_image} />
+          {isDragActive ? <p>Drop the files here ...</p> : <p>Drop</p>}
+        </div>
+        {/* <UploadContainer>
           <UploadText>ჩააგდე ან ატვირთე ლეპტოპის ფოტო</UploadText>
           <ButtonWrapper>
             <Button>ატვირთე</Button>
           </ButtonWrapper>
-        </UploadContainer>
+        </UploadContainer> */}
         <InputContainer>
           <InputsWrapper>
             <Label>ლეპტოპის სახელი</Label>
@@ -245,11 +256,21 @@ const LaptopFormPage = () => {
             <Label>მეხსიერების ტიპი</Label>
             <RadioInputWrapper isFirst>
               <Wrapper>
-                <RadioInput />
+                <input
+                  type="radio"
+                  value={formik.values.laptop_hard_drive_type}
+                  name="laptopCondition"
+                  onChange={formik.handleChange}
+                />
                 <RadioLabel>SSD</RadioLabel>
               </Wrapper>
-              <Wrapper>
-                <RadioInput isSecond />
+              <Wrapper hasMargin>
+                <input
+                  type="radio"
+                  value={formik.values.laptop_hard_drive_type}
+                  name="laptopCondition"
+                  onChange={formik.handleChange}
+                />
                 <RadioLabel>HDD</RadioLabel>
               </Wrapper>
             </RadioInputWrapper>
@@ -262,7 +283,7 @@ const LaptopFormPage = () => {
             <Input
               value={formik.values.laptop_purchase_date}
               onChange={handleInputChange}
-              // placeholder="date"
+              placeholder="date"
               name="laptop_purchase_date"
               onBlur={formik.onBlur}
               type="date"
@@ -289,11 +310,21 @@ const LaptopFormPage = () => {
             <Label isLast>ლეპტოპის მდგომარეობა</Label>
             <RadioInputWrapper>
               <Wrapper>
-                <RadioInput />
+                <input
+                  type="radio"
+                  value={formik.values.laptop_state}
+                  name="laptopCondition"
+                  onChange={formik.handleChange}
+                />
                 <RadioLabel>ახალი</RadioLabel>
               </Wrapper>
-              <Wrapper>
-                <RadioInput isSecond />
+              <Wrapper hasMargin>
+                <input
+                  type="radio"
+                  value={formik.values.laptop_state}
+                  name="laptopCondition"
+                  onChange={formik.handleChange}
+                />
                 <RadioLabel>ძველი</RadioLabel>
               </Wrapper>
             </RadioInputWrapper>
@@ -308,7 +339,7 @@ const LaptopFormPage = () => {
           </ButtonWrapper>
         </ButtonContainer>
       </FormContainer>
-      {openPopUp && <PopUp closePopUp={togglePopUp} />}
+      {location.pathname === "/success" && <PopUp closePopUp={togglePopUp} />}
       <EclipseLogo />
     </Container>
   );

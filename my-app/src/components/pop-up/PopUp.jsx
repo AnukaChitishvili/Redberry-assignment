@@ -21,8 +21,8 @@ const PopUp = ({ closePopUp = () => {} }) => {
     navigate("/");
   };
 
-  const navigateToLaptopInfoPage = () => {
-    navigate("/laptop-info");
+  const navigateToLaptopListPage = () => {
+    navigate("/data-list");
   };
 
   return (
@@ -31,7 +31,7 @@ const PopUp = ({ closePopUp = () => {} }) => {
         <img src={PopUpImg} alt="pop up" />
         <Title>ჩანაწერი დამატებულია!</Title>
         <ButtonWrapper>
-          <Button onClick={navigateToLaptopInfoPage}>სიაში დამატება</Button>
+          <Button onClick={navigateToLaptopListPage}>სიაში დამატება</Button>
         </ButtonWrapper>
         <SubTitle onClick={goToHomepage}>მთავარი</SubTitle>
       </PopUpContainer>

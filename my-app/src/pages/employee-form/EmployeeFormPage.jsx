@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
@@ -29,6 +29,8 @@ const validationSchema = Yup.object({
     .min(3, "მინიმუმ ორი სიმბოლო, ქართული ასოები")
     .matches(/^[ა-ჰ]*$/, "მინიმუმ ორი სიმბოლო, ქართული ასოები")
     .required("ველის შევსება სავალდებულოა"),
+  // position_id:
+  // team_id: Yup.string().required("anuka"),
   email: Yup.string()
     .matches(/[a-z0-9]+@redberry.ge/, "უნდა მთავრდებოდეს @redberry.ge-თი")
     .required("ველის შევსება სავალდებულოა"),
@@ -42,6 +44,7 @@ const validationSchema = Yup.object({
 
 const EmployeeInfo = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [teams, setTeams] = useState([]);
   const [positions, setPositions] = useState([]);
 
@@ -92,7 +95,7 @@ const EmployeeInfo = () => {
   return (
     <Container>
       <BackwardButton onClick={navigateToHomepage} />
-      <FormTitle />
+      <FormTitle pathName={location.pathname} />
       <FormContainer onSubmit={formik.handleSubmit}>
         <FormWrapper>
           <InputContainer>
@@ -134,6 +137,11 @@ const EmployeeInfo = () => {
               title="თიმი"
               setFieldValue={handleInputChange}
               name="team_id"
+              error={
+                formik.errors.team_id && formik.touched.team_id
+                  ? formik.errors.team_id
+                  : null
+              }
             />
           </SelectInputWrapper>
           <SelectInputWrapper>

@@ -2,12 +2,20 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   display: flex;
-  height: 100%;
-  flex-direction: column;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
+`;
+
+export const Wrapper = styled.div`
+  width: 1178px;
+  max-width: 1178px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   @media (max-width: 390px) {
-    padding: 0 16px;
+    flex-direction: column;
+    width: 358px;
   }
 `;
 
@@ -25,11 +33,8 @@ export const ContentTitle = styled.h2`
 
 export const ContentContainer = styled.div`
   display: flex;
-  margin-top: 97px;
-  padding-bottom: 170px;
   @media (max-width: 390px) {
     flex-direction: column;
-    margin-top: 33px;
   }
 `;
 
@@ -46,14 +51,6 @@ export const ContentWrapper = styled.div`
   @media (max-width: 390px) {
     width: 358px;
     height: 123px;
-  }
-`;
-
-export const Wrapper = styled.div`
-  margin-left: 52px;
-  @media (max-width: 390px) {
-    margin-left: 0;
-    margin-top: 26px;
   }
 `;
 
