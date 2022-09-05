@@ -10,7 +10,6 @@ import {
   Img,
   InfoWrapper,
   Title,
-  LinkTag,
   Paragraph,
   Wrapper,
 } from "./dataList.style";
@@ -41,7 +40,10 @@ const DataList = () => {
             // key
             <ContentContainer>
               <ContentWrapper>
-                <Img src={card.laptop.image} key={card.laptop.id} />
+                <Img
+                  src={"https://pcfy.redberryinternship.ge" + card.laptop.image}
+                  key={card.laptop.id}
+                />
                 <InfoWrapper>
                   <Title>
                     {card.user.name} {card.user.surname}

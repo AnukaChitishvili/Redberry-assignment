@@ -1,6 +1,14 @@
 import { SelectInputContainer } from "./selectInput.style";
 
-const SelectInput = ({ name, options, title, setFieldValue, value, error }) => {
+const SelectInput = ({
+  name,
+  options,
+  valueFieldName = "id",
+  title,
+  setFieldValue,
+  value,
+  error,
+}) => {
   return (
     <SelectInputContainer
       name={name}
@@ -12,7 +20,7 @@ const SelectInput = ({ name, options, title, setFieldValue, value, error }) => {
         {title}
       </option>
       {options.map((option) => (
-        <option key={option.id} value={option.id}>
+        <option key={option.id} value={option[valueFieldName]}>
           {option.name}
         </option>
       ))}

@@ -59,12 +59,6 @@ import PopUp from "../../components/pop-up/PopUp";
 // });
 
 const LaptopFormPage = () => {
-  const onDrop = useCallback((acceptedFiles) => {
-    console.log(acceptedFiles);
-  }, []);
-
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-
   const location = useLocation();
   const navigate = useNavigate();
   const [brands, setBrands] = useState([]);
@@ -75,7 +69,7 @@ const LaptopFormPage = () => {
   const formik = useFormik({
     initialValues: {
       laptop_name: "",
-      laptop_image: "",
+      laptop_image: null,
       laptop_brand_id: "",
       laptop_cpu: "",
       laptop_cpu_cores: "",
@@ -87,24 +81,40 @@ const LaptopFormPage = () => {
       laptop_price: "",
     },
     // validationSchema,
-    onSubmit: async () => {
-      navigate("/success");
-      // const values = localStorage.getItem("values");
-      // const parsed = JSON.parse(values);
+    onSubmit: async (values) => {
+      const storedData = localStorage.getItem("values");
+      const parsedStoredData = JSON.parse(storedData);
+      const tempValues = {
+        ...parsedStoredData,
+        laptop_state: "used",
+        laptop_hard_drive_type: "HDD",
+      };
 
-      // const body = JSON.stringify({
-      //   ...parsed,
-      //   laptop_state: "used",
-      //   laptop_hard_drive_type: "HDD",
-      //   token: "37a484885e326bfbc5e85e98dbe800fd",
-      // });
+      console.log(parsedStoredData);
 
-      // fetch(address, {
-      //   method: "POST",
-      //   body: body,
-      // })
-      //   .then((res) => res.json())
-      //   .then((res) => console.log("res", res));
+      const formData = new FormData();
+
+      Object.entries(tempValues).map(([key, value]) => {
+        if (key === "position_id") {
+          formData.append(key, +value);
+        } else {
+          formData.append(key, value);
+        }
+      });
+
+      formData.append("token", "37a484885e326bfbc5e85e98dbe800fd");
+      formData.append("laptop_image", values.laptop_image);
+
+      fetch(address, {
+        method: "POST",
+        body: formData,
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          localStorage.removeItem("values");
+          navigate("/success");
+        })
+        .catch((err) => console.log("err", err.message));
     },
   });
 
@@ -128,7 +138,6 @@ const LaptopFormPage = () => {
   const handleInputChange = async (e) => {
     await formik.setFieldValue(e.target.name, e.target.value);
     const previousValues = JSON.parse(localStorage.getItem("values"));
-
     localStorage.setItem(
       "values",
       JSON.stringify({
@@ -138,6 +147,19 @@ const LaptopFormPage = () => {
       })
     );
   };
+
+  // const handleRadioInputChange = async (e) => {
+  //   await formik.handleChange(e.target.name,);
+  //   const previousValues = JSON.parse(localStorage.getItem("values"));
+  //   localStorage.setItem(
+  //     "values",
+  //     JSON.stringify({
+  //       ...previousValues,
+  //       ...formik.values,
+  //       [e.target.name]: e.target.value,
+  //     })
+  //   );
+  // };
 
   const navigateToHomepage = () => {
     navigate("/");
@@ -151,21 +173,32 @@ const LaptopFormPage = () => {
     navigate("/laptops");
   };
 
+  const onDrop = useCallback(
+    (acceptedFiles) => {
+      if (acceptedFiles.length) {
+        formik.setFieldValue("laptop_image", acceptedFiles[0]);
+      }
+    },
+    [formik]
+  );
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
   return (
     <Container>
       <BackwardButton onClick={navigateToHomepage} />
       <FormTitle pathName={location.pathname} />
       <FormContainer onSubmit={formik.handleSubmit}>
-        <div {...getRootProps()}>
-          <input {...getInputProps()} value={formik.values.laptop_image} />
-          {isDragActive ? <p>Drop the files here ...</p> : <p>Drop</p>}
-        </div>
-        {/* <UploadContainer>
+        <UploadContainer {...getRootProps()}>
           <UploadText>ჩააგდე ან ატვირთე ლეპტოპის ფოტო</UploadText>
-          <ButtonWrapper>
-            <Button>ატვირთე</Button>
-          </ButtonWrapper>
-        </UploadContainer> */}
+          <input {...getInputProps()} />
+          {isDragActive ? (
+            <p>Drop the files here ...</p>
+          ) : (
+            <ButtonWrapper>
+              <Button>ატვირთე</Button>
+            </ButtonWrapper>
+          )}
+        </UploadContainer>
         <InputContainer>
           <InputsWrapper>
             <Label>ლეპტოპის სახელი</Label>
@@ -201,6 +234,7 @@ const LaptopFormPage = () => {
               value={formik.values.laptop_cpu}
               name="laptop_cpu"
               setFieldValue={handleInputChange}
+              valueFieldName="name"
             />
           </SelectInputWrapper>
           <InputsWrapper hasMargin>
@@ -259,7 +293,7 @@ const LaptopFormPage = () => {
                 <input
                   type="radio"
                   value={formik.values.laptop_hard_drive_type}
-                  name="laptopCondition"
+                  name="laptop_hard_drive_type"
                   onChange={formik.handleChange}
                 />
                 <RadioLabel>SSD</RadioLabel>
@@ -268,7 +302,7 @@ const LaptopFormPage = () => {
                 <input
                   type="radio"
                   value={formik.values.laptop_hard_drive_type}
-                  name="laptopCondition"
+                  name="laptop_hard_drive_type"
                   onChange={formik.handleChange}
                 />
                 <RadioLabel>HDD</RadioLabel>
@@ -313,7 +347,7 @@ const LaptopFormPage = () => {
                 <input
                   type="radio"
                   value={formik.values.laptop_state}
-                  name="laptopCondition"
+                  name="laptop_state"
                   onChange={formik.handleChange}
                 />
                 <RadioLabel>ახალი</RadioLabel>
@@ -322,7 +356,7 @@ const LaptopFormPage = () => {
                 <input
                   type="radio"
                   value={formik.values.laptop_state}
-                  name="laptopCondition"
+                  name="laptop_state"
                   onChange={formik.handleChange}
                 />
                 <RadioLabel>ძველი</RadioLabel>

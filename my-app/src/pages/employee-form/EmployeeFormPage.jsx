@@ -34,7 +34,7 @@ const validationSchema = Yup.object({
   email: Yup.string()
     .matches(/[a-z0-9]+@redberry.ge/, "უნდა მთავრდებოდეს @redberry.ge-თი")
     .required("ველის შევსება სავალდებულოა"),
-  phonenumber: Yup.string()
+  phone_number: Yup.string()
     .matches(
       /^(\+?995)?(79\d{7}|5\d{8})$/,
       "უნდა აკმაყოფილებდეს ქართული ნომრის ფორმატს"
@@ -66,7 +66,7 @@ const EmployeeInfo = () => {
       name: "",
       surname: "",
       email: "",
-      phonenumber: "",
+      phone_number: "",
       position_id: "",
       team_id: "",
     },
@@ -172,14 +172,14 @@ const EmployeeInfo = () => {
           <InputWrapper>
             <Label>ტელეფონის ნომერი</Label>
             <Input
-              value={formik.values.phonenumber}
+              value={formik.values.phone_number}
               onChange={handleInputChange}
-              name="phonenumber"
+              name="phone_number"
               onBlur={formik.onBlur}
               placeholder="ტელეფონის ნომერი"
               error={
-                formik.errors.phonenumber && formik.touched.phonenumber
-                  ? formik.errors.phonenumber
+                formik.errors.phone_number && formik.touched.phone_number
+                  ? formik.errors.phone_number
                   : null
               }
             />
